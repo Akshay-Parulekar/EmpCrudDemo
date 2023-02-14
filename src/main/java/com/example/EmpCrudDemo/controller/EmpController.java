@@ -3,6 +3,10 @@ package com.example.EmpCrudDemo.controller;
 import com.example.EmpCrudDemo.dao.EmpDao;
 import com.example.EmpCrudDemo.entity.Emp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +24,29 @@ public class EmpController {
     @GetMapping("/")
     public String home(Model model)
     {
-        List<Emp> listEmp = empDao.findAll();
+        int curPage = 1;
+        int maxSize = 5;
+
+        Page<Emp> pageEmp = empDao.findAll(PageRequest.of(curPage-1, maxSize, Sort.by("name")));
+        List<Emp> listEmp = pageEmp.toList();
         model.addAttribute("listEmp", listEmp);
+        model.addAttribute("curPage", curPage);
+        model.addAttribute("totalPages", pageEmp.getTotalPages());
+
+        return "index";
+    }
+
+    @GetMapping("/emp/{curPage}/")
+    public String page(Model model, @PathVariable int curPage)
+    {
+        int maxSize = 5;
+
+        Page<Emp> pageEmp = empDao.findAll(PageRequest.of(curPage-1, maxSize, Sort.by("name")));
+        List<Emp> listEmp = pageEmp.toList();
+        model.addAttribute("listEmp", listEmp);
+        model.addAttribute("curPage", curPage);
+        model.addAttribute("totalPages", pageEmp.getTotalPages());
+
         return "index";
     }
 
@@ -29,8 +54,16 @@ public class EmpController {
     public String saveEmp(Model model, Emp emp)
     {
         empDao.save(emp);
-        List<Emp> listEmp = empDao.findAll();
+
+        int curPage = 1;
+        int maxSize = 5;
+
+        Page<Emp> pageEmp = empDao.findAll(PageRequest.of(curPage-1, maxSize, Sort.by("name")));
+        List<Emp> listEmp = pageEmp.toList();
         model.addAttribute("listEmp", listEmp);
+        model.addAttribute("curPage", curPage);
+        model.addAttribute("totalPages", pageEmp.getTotalPages());
+
         return "index";
     }
 
@@ -38,8 +71,16 @@ public class EmpController {
     public String deleteEmp(Model model, @PathVariable int id)
     {
         empDao.deleteById(id);
-        List<Emp> listEmp = empDao.findAll();
+
+        int curPage = 1;
+        int maxSize = 5;
+
+        Page<Emp> pageEmp = empDao.findAll(PageRequest.of(curPage-1, maxSize, Sort.by("name")));
+        List<Emp> listEmp = pageEmp.toList();
         model.addAttribute("listEmp", listEmp);
+        model.addAttribute("curPage", curPage);
+        model.addAttribute("totalPages", pageEmp.getTotalPages());
+
         return "index";
     }
 }

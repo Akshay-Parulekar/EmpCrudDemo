@@ -45,6 +45,19 @@
         </tbody>
     </table>
 </div>
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item" th:classappend="${curPage == 1} ? 'disabled'"><a class="page-link" aria-label="Previous" th:href="@{/emp/{prevPage}/(prevPage = ${curPage-1})}"><span aria-hidden="true">«</span></a></li>
+
+
+        <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}" th:classappend="${i == curPage} ? 'active'"><a class="page-link" th:href="@{/emp/{curPage}/(curPage = ${i})}" th:text="${i}"></a></li>
+
+
+        <li class="page-item" th:classappend="${curPage == totalPages} ? 'disabled'"><a class="page-link" aria-label="Next" th:href="@{/emp/{nextPage}/(nextPage = ${curPage+1})}"><span aria-hidden="true">»</span></a></li>
+    </ul>
+</nav>
+
 <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
