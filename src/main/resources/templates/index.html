@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>EmpDemo</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+
+<body>
+
+<form style="margin: 10px;" method="post" action="/emp/save/">
+    <input class="form-control" type="hidden" name="id" value="0">
+    <input class="form-control" type="text" name="name" placeholder="Enter Name">
+    <input class="form-control" type="number" name="salary" placeholder="Enter Salary">
+    <button class="btn btn-primary" type="submit" style="margin-right: 5px;margin-top: 5px;">Save</button>
+    <button class="btn btn-secondary" type="reset" style="margin-top: 5px;">Clear</button>
+</form>
+
+
+<div class="table-responsive" style="margin: 10px; width: 60%;">
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="text-align: center;">ID</th>
+            <th style="text-align: center;">NAME</th>
+            <th style="text-align: center;">SALARY</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="emp : ${listEmp}">
+            <td class="text-end" th:text="${emp.getId()}"></td>
+            <td th:text="${emp.getName()}"></td>
+            <td class="text-end" th:text="${emp.getSalary()}"></td>
+            <td class="text-end">
+                <div class="btn-group" role="group">
+                    <a class="btn btn-danger" role="button" th:href="@{/emp/delete/{id}/(id=${emp.getId()})}"><i class="fa fa-trash-o"></i></a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
