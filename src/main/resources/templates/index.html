@@ -12,10 +12,11 @@
 
 <body>
 
-<form style="margin: 10px;" method="post" action="/emp/save/">
+<form style="margin: 10px;" method="post" action="/emp/save/" enctype="multipart/form-data" accept="image/jpg">
     <input class="form-control" type="hidden" name="id" value="0">
     <input class="form-control" type="text" name="name" placeholder="Enter Name">
     <input class="form-control" type="number" name="salary" placeholder="Enter Salary">
+    <input class="form-control" type="file" name="file">
     <button class="btn btn-primary" type="submit" style="margin-right: 5px;margin-top: 5px;">Save</button>
     <button class="btn btn-secondary" type="reset" style="margin-top: 5px;">Clear</button>
 </form>
@@ -28,6 +29,7 @@
             <th style="text-align: center;">ID</th>
             <th style="text-align: center;">NAME</th>
             <th style="text-align: center;">SALARY</th>
+            <th style="text-align: center;">PHOTO</th>
             <th></th>
         </tr>
         </thead>
@@ -40,6 +42,9 @@
                 <div class="btn-group" role="group">
                     <a class="btn btn-danger" role="button" th:href="@{/emp/delete/{id}/(id=${emp.getId()})}"><i class="fa fa-trash-o"></i></a>
                 </div>
+            </td>
+            <td>
+                <img height="100px" width="70px" th:src="@{'/assets/img/' + ${emp.getId()} + '.jpg'}">
             </td>
         </tr>
         </tbody>
